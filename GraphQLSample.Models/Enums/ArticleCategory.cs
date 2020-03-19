@@ -4,7 +4,10 @@ using System.Text;
 
 namespace GraphQLSample.Models.Enums
 {
-    public class ArticleCategory
+    public enum ArticleCategory
     {
+        Business,
+        Sport,
+        Education
     }
 }
