@@ -15,6 +15,7 @@ namespace GraphQLSample.GraphQL.Types
             Field(t => t.Title);
             Field(t => t.Content);
             Field(t => t.CreationDate);
-    }
+            Field<ArticleCategoryEnumType>("Category", "The category of article");
+        }
     }
 }
