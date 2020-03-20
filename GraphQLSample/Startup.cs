@@ -44,6 +44,7 @@ namespace GraphQLSample
             services.AddScoped<GraphQLSampleSchema>();
 
             services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddGraphQL(o => { o.ExposeExceptions = true; })
                 .AddGraphTypes(ServiceLifetime.Scoped);
         }
