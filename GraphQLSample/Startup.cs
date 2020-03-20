@@ -2,8 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using GraphQLSample.DataAccess;
 using GraphQLSample.DataAccess.Configuration;
+using GraphQLSample.DataAccess.Repositories;
+using GraphQLSample.DataAccess.Repositories.Interfaces;
+using GraphQLSample.GraphQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,28 +35,24 @@ namespace GraphQLSample
         {
             services.AddDbContext<GraphQLSampleDbContext>();
             services.Configure<ConnectionStringSettings>(Configuration.GetSection("ConnectionStrings"));
-            services.AddControllers();
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
 
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<GraphQLSampleSchema>();
+
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddGraphQL(o => { o.ExposeExceptions = true; })
+                .AddGraphTypes(ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, GraphQLSampleDbContext dbContext)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseGraphQL<GraphQLSampleSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
             dbContext.Seed();
         }
