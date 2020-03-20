@@ -12,5 +12,6 @@ namespace GraphQLSample.Models.Entities
         public string Content { get; set; }
         public DateTime CreationDate { get; set; }
         public ArticleCategory Category { get; set; }
+        public Author Author { get; set; }
     }
 }

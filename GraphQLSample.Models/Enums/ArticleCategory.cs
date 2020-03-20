@@ -6,7 +6,7 @@ namespace GraphQLSample.Models.Enums
 {
     public enum ArticleCategory
     {
-        Business,
+        Business = 1,
         Sport,
         Education
     }
