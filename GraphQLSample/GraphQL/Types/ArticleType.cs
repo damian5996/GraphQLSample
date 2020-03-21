@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using GraphQL.DataLoader;
+using GraphQL.Types;
 using GraphQLSample.DataAccess.Repositories.Interfaces;
 using GraphQLSample.Models.Entities;
 using System;
@@ -11,7 +12,7 @@ namespace GraphQLSample.GraphQL.Types
     public class ArticleType : ObjectGraphType<Article>
     {
         private readonly IAuthorRepository _authorRepository;
-        public ArticleType(IAuthorRepository authorRepository)
+        public ArticleType(IAuthorRepository authorRepository, IDataLoaderContextAccessor dataLoaderAccessor)
         {
             _authorRepository = authorRepository;
 
@@ -22,9 +23,13 @@ namespace GraphQLSample.GraphQL.Types
             Field<ArticleCategoryEnumType>("Category", "The category of article");
             Field<AuthorType>(
                 "author",
-                resolve: context => _authorRepository.Get(context.Source.Id)
-                );
+                resolve: context =>
+                {
+                    var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Author>(
+                        "GetAuthor", _authorRepository.Get);
 
+                    return loader.LoadAsync(context.Source.Id);
+                });
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GraphQLSample.DataAccess.Repositories
@@ -18,9 +19,9 @@ namespace GraphQLSample.DataAccess.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Author> Get(int id)
+        public async Task<IDictionary<int, Author>> Get(IEnumerable<int> ids, CancellationToken cancellationToken)
         {
-            return await _dbContext.Authors.FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.Authors.Where(x => ids.Contains(x.Id)).ToDictionaryAsync(x => x.Id);
         }
     }
 }

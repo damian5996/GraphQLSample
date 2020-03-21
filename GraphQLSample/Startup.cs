@@ -46,7 +46,8 @@ namespace GraphQLSample
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddGraphQL(o => { o.ExposeExceptions = true; })
-                .AddGraphTypes(ServiceLifetime.Scoped);
+                .AddGraphTypes(ServiceLifetime.Scoped)
+                .AddDataLoader();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
