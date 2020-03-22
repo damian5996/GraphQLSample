@@ -9,5 +9,6 @@ namespace GraphQLSample.DataAccess.Repositories.Interfaces
     public interface IArticleRepository
     {
         Task<IEnumerable<Article>> GetAll();
+        Task<Article> GetOne(int id);
     }
 }

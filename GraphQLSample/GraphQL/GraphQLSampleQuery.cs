@@ -20,6 +20,16 @@ namespace GraphQLSample.GraphQL
                 "articles",
                 resolve: context => _articleRepository.GetAll()
             );
+
+            Field<ArticleType>(
+                "article",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
+                resolve: context =>
+                {
+                    var id = context.GetArgument<int>("id");
+                    return articleRepository.GetOne(id);
+                }
+            );
         }
     }
 }

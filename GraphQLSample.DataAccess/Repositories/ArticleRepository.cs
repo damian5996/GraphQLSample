@@ -21,5 +21,10 @@ namespace GraphQLSample.DataAccess.Repositories
         {
             return await _dbContext.Articles.ToListAsync();
         }
+
+        public async Task<Article> GetOne(int id)
+        {
+            return await _dbContext.Articles.FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
