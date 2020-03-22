@@ -4,14 +4,16 @@ using GraphQLSample.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraphQLSample.DataAccess.Migrations
 {
     [DbContext(typeof(GraphQLSampleDbContext))]
-    partial class GraphQLSampleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200322085156_Made_AuthorId_Required")]
+    partial class Made_AuthorId_Required
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

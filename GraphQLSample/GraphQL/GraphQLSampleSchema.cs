@@ -12,6 +12,7 @@ namespace GraphQLSample.GraphQL
         public GraphQLSampleSchema(IDependencyResolver dependencyResolver) : base(dependencyResolver)
         {
             Query = dependencyResolver.Resolve<GraphQLSampleQuery>();
+            Mutation = dependencyResolver.Resolve<GraphQLSampleMutation>();
         }
     }
 }

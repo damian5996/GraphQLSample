@@ -1,5 +1,6 @@
 ﻿using GraphQLSample.DataAccess.Repositories.Interfaces;
 using GraphQLSample.Models.Entities;
+using GraphQLSample.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,15 @@ namespace GraphQLSample.DataAccess.Repositories
         public async Task<Article> GetOne(int id)
         {
             return await _dbContext.Articles.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Article> AddArticle(Article article)
+        {
+            article.CreationDate = DateTime.Now;
+            article.Category = article.Category ?? ArticleCategory.Other;
+            _dbContext.Articles.Add(article);
+            await _dbContext.SaveChangesAsync();
+            return article;
         }
     }
 }

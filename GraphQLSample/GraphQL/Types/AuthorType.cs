@@ -14,7 +14,7 @@ namespace GraphQLSample.GraphQL.Types
             Field(t => t.Id);
             Field(t => t.FirstName);
             Field(t => t.LastName);
-            Field(t => t.Age);
+            Field(t => t.Age, nullable:true);
         }
     }
 }

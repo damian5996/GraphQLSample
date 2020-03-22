@@ -8,6 +8,7 @@ namespace GraphQLSample.Models.Enums
     {
         Business = 1,
         Sport,
-        Education
+        Education,
+        Other
     }
 }
