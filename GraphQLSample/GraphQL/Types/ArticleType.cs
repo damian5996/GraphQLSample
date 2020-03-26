@@ -28,7 +28,7 @@ namespace GraphQLSample.GraphQL.Types
                     var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Author>(
                         "GetAuthor", _authorRepository.Get);
 
-                    return loader.LoadAsync(context.Source.Id);
+                    return loader.LoadAsync(context.Source.AuthorId);
                 });
         }
     }
